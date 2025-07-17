@@ -9,7 +9,7 @@ helloWorld.exe : helloWorld.c
 ## Variables
 Imagine having a long makefile full of different rules to build desired targets and now you swapped your compiler from gcc to g++. You can go through everything again and change all instances of gcc to g++ or you can save yourself time and create a variable for your compiler. Say we are writing a c program. The convention would be to call the c compiler variable CC. Take another example where your repeatedly use the same compiler flags like `-c -O3` we can take these two flags and set our variable `CFLAGS= -c -O3`. this way we add or remove similar instances of the same flags with ease.
 
-Decleration of variables can be done in two ways using `=` or `:=`. the = operator allows the variable to have a recursive definition which essentially means if it uses some function it will redefine itself whilst := will only assign on initial call without calling any functions internally. I have not yet experienced a major difference but it is good to point out.
+Decleration of variables can be done in two ways using `=` or `:=`. the = operator allows the variable to have a recursive definition which essentially means if it uses some function it will redefine itself whilst `:=` will only assign on initial call without calling any functions internally. I have not yet experienced a major difference but it is good to point out.
 ## Special variables
 Make has some fancy variables that make simplifing the makefile even more. The ones I frequently use are `$<` and `$@`.
 * `$<` is the variable to insert the name of the first source for the rule `$^` is similar except takes all sources and inserts in place.
