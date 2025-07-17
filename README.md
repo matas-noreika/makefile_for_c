@@ -11,9 +11,9 @@ Imagine having a long makefile full of different rules to build desired targets 
 
 Decleration of variables can be done in two ways using (=) or (:=). the = operator allows the variable to have a recursive definition which essentially means if it uses some function it will redefine itself whilst := will only assign on initial call without calling any functions internally. I have not yet experienced a major difference but it is good to point out.
 ## Special variables
-Make has some fancy variables that make simplifing the makefile even more. The ones I frequently use are $< and $@.
-* $< is the variable to insert the name of the first source for the rule $^ is similar except takes all sources and inserts in place.
-* $@ is the variable to insert the name of the target of the rule.
+Make has some fancy variables that make simplifing the makefile even more. The ones I frequently use are `$<` and `$@`.
+* `$<` is the variable to insert the name of the first source for the rule `$^` is similar except takes all sources and inserts in place.
+* `$@` is the variable to insert the name of the target of the rule.
 ## General make rules
 You may have now developed some makefiles and noticed its quite annoying having to essentially copy and paste the same rule with different target and source names. Well you would be happy to know that make has a handy feature call static pattern rules. Take the example two source files called helloWorld.c and helloWorld2.c. Without static pattern rules you would have the following makefile:
 ```
@@ -42,17 +42,17 @@ The above example replaces all source files with .o extension and saves into OBJ
 SRC= $(wildcard *.c)
 OBJ= $(SRC:%.c=%.o)
 ```
-* addprefix is useful in a case where you might need to link libraries like math for mac platform. addprefix works as the name implies it takes a list of names and adds a prefix to them see the example below how to save libraries to link with -l prefix:
+* addprefix is useful in a case where you might need to link libraries like math for mac platform. addprefix works as the name implies it takes a list of names and adds a prefix to them see the example below how to save libraries to link with `-l` prefix:
 ```
 LIBNAMES= math
 LIBS= $(addprefix -l, $(LIBNAMES))
 ```
-The outcome would be that LIBS will contain -lmath
+The outcome would be that LIBS will contain `-lmath`
 ## Special flags
 Make has special flags you can assign to a recipe that can enable further control of the output.
-* - is a flag used to ignore errors particularly useful in a clean rule where there is a possiblity the file does not exist. `-rm -f *.o 2> /dev/null`
-* @ is a flag used to disable the echo print of the instruction that is being executed useful for echo prints `@echo "Hi user"`
+* `-` is a flag used to ignore errors particularly useful in a clean rule where there is a possiblity the file does not exist. `-rm -f *.o 2> /dev/null`
+* `@` is a flag used to disable the echo print of the instruction that is being executed useful for echo prints `@echo "Hi user"`
 ## .d files
-This is probably one of my most favourite recent features I discovered about make. In some cases you may not be able to use the static pattern rule and need to write a rule for a particular target. gnu have made it quite simple to avoid that all together, using the -MMD compiler flag for gcc or g++ you can generate a .d file of the name of the output. If you check the contents of the file you would find that it generated a make rule for that source file. Using a similar approach like c headers we include the .d file in our makefile. From experience its best to include prior any static pattern rule declerations. This way you will have a make rule which has the correct required source files for target and since no explicit recipe is declared it will default to compile using the static pattern rule.
+This is probably one of my most favourite recent features I discovered about make. In some cases you may not be able to use the static pattern rule and need to write a rule for a particular target. gnu have made it quite simple to avoid that all together, using the `-MMD` compiler flag for gcc or g++ you can generate a .d file of the name of the output. If you check the contents of the file you would find that it generated a make rule for that source file. Using a similar approach like c headers we include the .d file in our makefile. From experience its best to include prior any static pattern rule declerations. This way you will have a make rule which has the correct required source files for target and since no explicit recipe is declared it will default to compile using the static pattern rule.
 ## Final notes
 Make is an incredibly powerful tool and many people skip it to use other tools like cmake which essential generate a makefile as an end result. I will hopefully over sometime include revisions to this mini tutorial and will make available some bash scripts to auto generate a very generic makefile suitable for most projects assuming of course a similar file structure as mine. I hope if you find this useful that you would share with your peers or add issues to add additional points that I have missed.
